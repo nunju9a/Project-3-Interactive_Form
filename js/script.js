@@ -135,7 +135,7 @@ $payOptions.change(function() {                                                 
     }
 });
 
-// Creating and appending the error messages to the DOM. Hides all errors by default
+// Creating and appending all error messages, hiding them all by default
 $('label[for="name"]').before('<label class="error" id="name-error"><font color="red">Name field must not be empty</font></label>');
 $('label[for="mail"]').before('<label class="error" id="email-error"><font color="red">Email field must contain a valid email address</font></label>');
 $('.activities legend').before('<label class="error" id="activity-error"><font color="red">Please select at least one activity</font></label>');
@@ -143,28 +143,27 @@ $('#credit-card').before('<label class="error" id="cc-number-error"><font color=
 $('#credit-card').before('<label class="error" id="cc-empty-error"><font color="red">Credit Card Number must not be empty</font></label>');
 $('#credit-card').before('<label class="error" id="cc-zip-error"><font color="red">Please enter a valid 5 digit ZIP code</font></label>');
 $('#credit-card').before('<label class="error" id="cc-cvv-error"><font color="red">Please enter a valid 3 digit CVV number</font></label>');
-
 $('.error').hide();
 
-// Name validation
+// Name validation function
 const validName = (name) => {
-  let valid = /^\S/.test(name);
+  let valid = /^\S/.test(name);                                       // Testing for valid name, disregarding whitespace
   if (valid) {
-    $('#name-error').hide();
+    $('#name-error').hide();                                        // Hide error message if a valid name exists
     return true;
   } else {
-    $('#name-error').show();
-    return false;
-  }
+      $('#name-error').show();                                   // Show error message if no valid name is entered
+      return false;
+    }
 }
 
-// Real time validation of name
-$('#name').on('input', (e) => {
-  if ($('#name').val() == '') {
-    validName($('#name').val());
+// 'Real-time' name validation
+$('#name').on('input', (e) => {                                         // Listening for current input in Name field
+  if ($('#name').val() == '') {                                        // If Name field is empty...
+    validName($('#name').val());                                      // Call validation function
   } else {
-    $('#name-error').hide();
-  }
+      $('#name-error').hide();                                      // Otherwise hide error message
+    }
 });
 
 // Email validation
