@@ -199,12 +199,12 @@ const validActivities = () => {
     }
 }
 
-// 'Real-time' validaion of activities
+// 'Real-time' validation of activities
 $('.activities').on('input', () => {                     // Listening for current input of activities
   validActivities();                                    // Calling validActivities function
 })
 
-// CC number validation
+// Credit Card validation function
 const validCcNumber = (cc) => {
   if ($('#payment').val() === 'credit card') {
     let valid = /^\d{13,16}$/.test(cc);
@@ -214,13 +214,13 @@ const validCcNumber = (cc) => {
       $('#cc-empty-error').hide();
       return true;
     } else if (cc !== '') {  //Checks if the CC number is empty first
-      $('#cc-empty-error').hide(); //then checks if the CC number is between 13 and 16 digits
-      $('#cc-number-error').show();
-    } else {
-      $('#cc-number-error').hide();
-      $('#cc-empty-error').show();
-      return false;
-    }
+        $('#cc-empty-error').hide(); //then checks if the CC number is between 13 and 16 digits
+        $('#cc-number-error').show();
+      } else {
+        $('#cc-number-error').hide();
+        $('#cc-empty-error').show();
+        return false;
+        }
   }
 }
 
