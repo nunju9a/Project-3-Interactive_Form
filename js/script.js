@@ -178,7 +178,7 @@ const validEmail = (email) => {
     }
 }
 
-// Real time validation of email
+// 'Real-time' validation of email
 $('#mail').on('input', () => {                              // Listening for current input of email field
   if ($('#mail').val() !== '') {                           // If email field is empty
     validEmail($('#mail').val());                         // Call validation function
@@ -187,20 +187,21 @@ $('#mail').on('input', () => {                              // Listening for cur
     }
 });
 
-// Activity validation
-const validActivity = () => {
+// Activities validation function
+const validActivities = () => {
 
-  if ($('.activities input:checked').length > 0) {
-    $('#activity-error').hide();
+  if ($('.activities input:checked').length > 0) {              // If there are any activties checked...
+    $('#activity-error').hide();                               // Hide error message
     return true;
-  }
-  $('#activity-error').show();
-  return false;
+  } else {
+     $('#activity-error').show();                            // Otherwise show error message
+     return false;
+    }
 }
 
-// Real time validaion of activity checkboxes
-$('.activities').on('input', () => {
-  validActivity();
+// 'Real-time' validaion of activities
+$('.activities').on('input', () => {                     // Listening for current input of activities
+  validActivities();                                    // Calling validActivities function
 })
 
 // CC number validation
@@ -287,13 +288,13 @@ $('#cvv').on('input', () => {
 
 // Checks the form to make sure there are no errors
 const isValid = () => {
-  if (validName($('#name').val()) && validEmail($('#mail').val()) && validActivity() && validCcNumber($('#cc-num').val()) &&
+  if (validName($('#name').val()) && validEmail($('#mail').val()) && validActivities() && validCcNumber($('#cc-num').val()) &&
     validZip($('#zip').val()) && validCVV($('#cvv').val())) {
     return true;
   } else {
     validName($('#name').val());
     validEmail($('#mail').val());
-    validActivity();
+    validActivities();
     validCcNumber($('#cc-num').val());
     validZip($('#zip').val());
     validCVV($('#cvv').val());
