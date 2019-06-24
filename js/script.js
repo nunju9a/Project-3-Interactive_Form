@@ -277,17 +277,17 @@ const validCVV = (cvv) => {
 // 'Real-time' validation of cvv
 $('#cvv').on('input', () => {                           // Listens for current input of cvv field
   if ($('#cvv').val() !== '') {                        // If cvv input is not empty...
-    validCVV($('#cvv').val());                        // Calls validcvv function
+    validCVV($('#cvv').val());                        // Calls validCvv function
   } else {
     $('#cc-cvv-error').hide();                      // Otherwise hide error message
   }
 });
 
-// Checks the form to make sure there are no errors
+// Checks all form fields at once to see if everything is valid
 const isValid = () => {
   if (validName($('#name').val()) && validEmail($('#mail').val()) && validActivities() && validCcNumber($('#cc-num').val()) &&
     validZip($('#zip').val()) && validCVV($('#cvv').val())) {
-    return true;
+    return true;                                // Returns true if all forms are valid
   } else {
     validName($('#name').val());
     validEmail($('#mail').val());
@@ -295,24 +295,31 @@ const isValid = () => {
     validCcNumber($('#cc-num').val());
     validZip($('#zip').val());
     validCVV($('#cvv').val());
-    return false;
+    return false;                            // Returns false any form is invalid
   }
 }
 
-
-// Prevents the form from submitting if any errors have occurred
+// Prevents default action of form submitting if any errors present
 $('form').on('submit', (e) => {
   if (isValid() === false) {
     e.preventDefault();
-  }
+  } else {
+    location.reload();
+    }
 });
 
-
-// Hides the credit card erorrs if you select a different payment method after the errors are displayed
-$('#payment').change(() => {
+// Hides any errors relating to credit card if any other payment option selected
+$('#payment').on('change', function() {
   if ($('#payment').val() === 'paypal' || $('#payment').val() === 'bitcoin') {
     $('#cc-cvv-error').hide();
     $('#cc-zip-error').hide();
     $('#cc-number-error').hide();
+    $('#cc-empty-error').hide(); 
   }
 });
+
+//$('form').on('click', (e) => {
+ // if (isValid() === true) {
+    //location.reload();
+  //}
+//});
