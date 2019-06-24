@@ -135,14 +135,14 @@ $payOptions.change(function() {                                                 
     }
 });
 
-// Creating and appending all error messages, hiding them all by default
+// Creating and appending all error messages in red, hiding them all by default
 $('label[for="name"]').before('<label class="error" id="name-error"><font color="red">Name field must not be empty</font></label>');
-$('label[for="mail"]').before('<label class="error" id="email-error"><font color="red">Email field must contain a valid email address</font></label>');
+$('label[for="mail"]').before('<label class="error" id="email-error"><font color="red">Please enter a valid email address</font></label>');
 $('.activities legend').before('<label class="error" id="activity-error"><font color="red">Please select at least one activity</font></label>');
-$('#credit-card').before('<label class="error" id="cc-number-error"><font color="red">Please enter a valid credit card number that is 13-16 digits long</font></label>');
-$('#credit-card').before('<label class="error" id="cc-empty-error"><font color="red">Credit Card Number must not be empty</font></label>');
-$('#credit-card').before('<label class="error" id="cc-zip-error"><font color="red">Please enter a valid 5 digit ZIP code</font></label>');
-$('#credit-card').before('<label class="error" id="cc-cvv-error"><font color="red">Please enter a valid 3 digit CVV number</font></label>');
+$('#credit-card').before('<label class="error" id="cc-empty-error"><font color="red">Credit Card Number is empty</font></label>');
+$('#credit-card').before('<label class="error" id="cc-number-error"><font color="red">Please enter a valid credit card number between 13-16 digits</font></label>');
+$('#credit-card').before('<label class="error" id="cc-zip-error"><font color="red">Please enter a 5 digit ZIP code</font></label>');
+$('#credit-card').before('<label class="error" id="cc-cvv-error"><font color="red">Please enter a 3 digit CVV number</font></label>');
 $('.error').hide();
 
 // Name validation function
@@ -204,8 +204,18 @@ $('.activities').on('input', () => {                     // Listening for curren
   validActivities();                                    // Calling validActivities function
 })
 
+// Hides any errors relating to credit card if any other payment option selected
+$('#payment').on('change', function() {
+  if ($('#payment').val() === 'paypal' || $('#payment').val() === 'bitcoin') {
+    $('#cc-cvv-error').hide();
+    $('#cc-zip-error').hide();
+    $('#cc-number-error').hide();
+    $('#cc-empty-error').hide(); 
+  }
+});
+
 // Credit Card validation function
-const validCcNumber = (cc) => {
+const validCardNumber = (cc) => {
   if ($('#payment').val() === 'credit card') {                      // If credit card is selected as payment method...
     let valid = /^\d{13,16}$/.test(cc);                            // Testing if credit card is numbers from 13 to 16 digits
 
@@ -227,7 +237,7 @@ const validCcNumber = (cc) => {
 // 'Real-time' validation of credit card
 $('#cc-num').on('input', () => {                          // Listens for current input of credit card # field
   if ($('#cc-num').val() !== '') {                       // If credit card number not empty...
-    validCcNumber($('#cc-num').val())                   // Call validCcNumber function
+    validCardNumber($('#cc-num').val())                 // Call validCcNumber function
   } else if ($('#cc-num').val() == '') {               // If credit card number IS empty...
       $('#cc-empty-error').show();                    // Show empty credit card number message
     } else {
@@ -285,41 +295,26 @@ $('#cvv').on('input', () => {                           // Listens for current i
 
 // Checks all form fields at once to see if everything is valid
 const isValid = () => {
-  if (validName($('#name').val()) && validEmail($('#mail').val()) && validActivities() && validCcNumber($('#cc-num').val()) &&
+  if (validName($('#name').val()) && validEmail($('#mail').val()) && validActivities() && validCardNumber($('#cc-num').val()) &&
     validZip($('#zip').val()) && validCVV($('#cvv').val())) {
-    return true;                                // Returns true if all forms are valid
+    return true;                                                    // Returns true if all forms are valid
   } else {
-    validName($('#name').val());
-    validEmail($('#mail').val());
-    validActivities();
-    validCcNumber($('#cc-num').val());
-    validZip($('#zip').val());
-    validCVV($('#cvv').val());
-    return false;                            // Returns false any form is invalid
+      validName($('#name').val());
+      validEmail($('#mail').val());
+      validActivities();
+      validCardNumber($('#cc-num').val());
+      validZip($('#zip').val());
+      validCVV($('#cvv').val());
+    return false;                                               // Returns false if any form is invalid
   }
 }
 
 // Prevents default action of form submitting if any errors present
 $('form').on('submit', (e) => {
-  if (isValid() === false) {
-    e.preventDefault();
+  if (isValid() === true) {
+    window.location.reload();
+    
   } else {
-    location.reload();
+    e.preventDefault();
     }
 });
-
-// Hides any errors relating to credit card if any other payment option selected
-$('#payment').on('change', function() {
-  if ($('#payment').val() === 'paypal' || $('#payment').val() === 'bitcoin') {
-    $('#cc-cvv-error').hide();
-    $('#cc-zip-error').hide();
-    $('#cc-number-error').hide();
-    $('#cc-empty-error').hide(); 
-  }
-});
-
-//$('form').on('click', (e) => {
- // if (isValid() === true) {
-    //location.reload();
-  //}
-//});
