@@ -261,28 +261,27 @@ $('#zip').on('input', () => {                           // Listens for current i
 
 // Cvv validation function
 const validCVV = (cvv) => {
-  if ($('#payment').val() === 'credit card') {
-    let valid = /^\d{3}$/.test(cvv);
+  if ($('#payment').val() === 'credit card') {                    // If credit card selected as payment method...
+    let valid = /^\d{3}$/.test(cvv);                             // Testing if cvv is a 3 digit number
 
-    if (valid) {
-      $('#cc-cvv-error').hide();
+    if (valid) {                                               // If cvv is valid...
+      $('#cc-cvv-error').hide();                              // Hide error message
       return true;
     } else {
-      $('#cc-cvv-error').show();
-      return false;
-    }
+        $('#cc-cvv-error').show();                         // Otherwise show error message
+        return false;
+      }
   }
 }
 
-// Real time validation of CVV
-$('#cvv').on('input', () => {
-  if ($('#cvv').val() !== '') {
-    validCVV($('#cvv').val());
+// 'Real-time' validation of cvv
+$('#cvv').on('input', () => {                           // Listens for current input of cvv field
+  if ($('#cvv').val() !== '') {                        // If cvv input is not empty...
+    validCVV($('#cvv').val());                        // Calls validcvv function
   } else {
-    $('#cc-cvv-error').hide();
+    $('#cc-cvv-error').hide();                      // Otherwise hide error message
   }
 });
-
 
 // Checks the form to make sure there are no errors
 const isValid = () => {
