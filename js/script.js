@@ -206,34 +206,33 @@ $('.activities').on('input', () => {                     // Listening for curren
 
 // Credit Card validation function
 const validCcNumber = (cc) => {
-  if ($('#payment').val() === 'credit card') {
-    let valid = /^\d{13,16}$/.test(cc);
+  if ($('#payment').val() === 'credit card') {                      // If credit card is selected as payment method...
+    let valid = /^\d{13,16}$/.test(cc);                            // Testing if credit card is numbers from 13 to 16 digits
 
     if (valid) {
       $('#cc-number-error').hide();
-      $('#cc-empty-error').hide();
+      $('#cc-empty-error').hide();                              // If valid, hide error messages
       return true;
-    } else if (cc !== '') {  //Checks if the CC number is empty first
-        $('#cc-empty-error').hide(); //then checks if the CC number is between 13 and 16 digits
-        $('#cc-number-error').show();
+    } else if (cc !== '') {                                   // If credit card field is not empty...
+        $('#cc-empty-error').hide();                         // Hide empty error message
+        $('#cc-number-error').show();                       // Show  number error message
       } else {
-        $('#cc-number-error').hide();
-        $('#cc-empty-error').show();
-        return false;
+          $('#cc-number-error').hide();
+          $('#cc-empty-error').show();                   // Otherwise show empty credit card number message
+         return false;
         }
   }
 }
 
-// Real time validation of CC number
-$('#cc-num').on('input', () => {
-  if ($('#cc-num').val() !== '') {
-    validCcNumber($('#cc-num').val())
-  } else if ($('#cc-num').val() == '') {
-    $('#cc-empty-error').show();
-  } else {
-    $('#cc-number-error').show();
-
-  }
+// 'Real-time' validation of credit card
+$('#cc-num').on('input', () => {                          // Listens for current input of credit card # field
+  if ($('#cc-num').val() !== '') {                       // If credit card number not empty...
+    validCcNumber($('#cc-num').val())                   // Call validCcNumber function
+  } else if ($('#cc-num').val() == '') {               // If credit card number IS empty...
+      $('#cc-empty-error').show();                    // Show empty credit card number message
+    } else {
+        $('#cc-number-error').show();               // Otherwise show number error message
+      }
 });
 
 // ZIP code validation
