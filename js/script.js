@@ -235,32 +235,31 @@ $('#cc-num').on('input', () => {                          // Listens for current
       }
 });
 
-// ZIP code validation
+// Zip code validation function
 const validZip = (zip) => {
-  if ($('#payment').val() === 'credit card') {
-    let valid = /^\d{5}$/.test(zip);
+  if ($('#payment').val() === 'credit card') {                // If credit card selected as payment method...
+    let valid = /^\d{5}$/.test(zip);                         // Testing if zip code is a 5 digit number
 
-    if (valid) {
-      $('#cc-zip-error').hide();
+    if (valid) {                                           // If zip code is valid...
+      $('#cc-zip-error').hide();                          // Hide error message
       return true;
     } else {
-      $('#cc-zip-error').show();
-      return false;
+        $('#cc-zip-error').show();                     // Otherwise show error message
+        return false;
     }
   }
 }
 
-// Real time validation of the zip code
-$('#zip').on('input', () => {
-  if ($('#zip').val() !== '') {
-    validZip($('#zip').val());
+// 'Real-time' validation of zip code
+$('#zip').on('input', () => {                           // Listens for current input in zip code field
+  if ($('#zip').val() !== '') {                        // If zipcode is not empty
+    validZip($('#zip').val());                        // Calls validZip function
   } else {
-    $('#cc-zip-error').hide();
-  }
+      $('#cc-zip-error').hide();                    // Otherwise hide error message
+    }
 });
 
-
-// CC CVV validation
+// Cvv validation function
 const validCVV = (cvv) => {
   if ($('#payment').val() === 'credit card') {
     let valid = /^\d{3}$/.test(cvv);
