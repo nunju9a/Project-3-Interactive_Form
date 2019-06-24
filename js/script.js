@@ -166,29 +166,26 @@ $('#name').on('input', (e) => {                                         // Liste
     }
 });
 
-// Email validation
+// Email validation function
 const validEmail = (email) => {
-  let valid = /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
-
+  let valid = /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);  // Testing for valid email, with all characters such as '@' and '.' in the right order
   if (valid) {
-    $('#email-error').hide();
+    $('#email-error').hide();                        // If email is valid, hide error message
     return true;
   } else {
-    $('#email-error').show();
-    return false;
-  }
+      $('#email-error').show();                    // If email is not valid, show error message
+      return false;
+    }
 }
 
-// Real time validation of Email
-$('#mail').on('input', () => {
-  if ($('#mail').val() !== '') {
-    validEmail($('#mail').val());
+// Real time validation of email
+$('#mail').on('input', () => {                              // Listening for current input of email field
+  if ($('#mail').val() !== '') {                           // If email field is empty
+    validEmail($('#mail').val());                         // Call validation function
   } else {
-    $('#email-error').hide();
-  }
+      $('#email-error').hide();                         // Otherwise hide error message
+    }
 });
-
-
 
 // Activity validation
 const validActivity = () => {
