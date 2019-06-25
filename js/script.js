@@ -17,7 +17,6 @@ $('#other-title').hide();                                                       
          }                          
   });
 
-
   /*** T-SHIRT INFO SECTION
        Initially hides the color options until a certain design theme is selected
   ***/
@@ -31,19 +30,18 @@ $('#other-title').hide();                                                       
         $('#color').append('<option value="darkslategrey">Dark Slate Grey (JS Puns shirt only)</option>');        
         $('#color').append('<option value="gold">Gold (JS Puns shirt only)</option>');
         $('#colors-js-puns').show();
-        $('#color').val('cornflowerblue');                                 // Show cornflowerblue first
+
     } else if ($(this).val() === "heart js") {                            // If 'I <3 js' theme is selected...
             // Show all colors associated with 'I <3 js' only
             $('#color').append('<option value="tomato">Tomato (I &#9829; JS shirt only)</option>');
             $('#color').append('<option value="steelblue">Steel Blue (I &#9829; JS shirt only)</option>');
             $('#color').append('<option value="dimgrey">Dim Grey (I &#9829; JS shirt only)</option>');
             $('#colors-js-puns').show();
-            $('#color').val('tomato');                                // Show tomato first
+          
       } else {                                                       // If nothing is selected....
             $('#colors-js-puns').hide();                            // Keep all color options hidden
         }
 });
-
 
 /***
  ACTIVITY REGISTRATION SECTION
