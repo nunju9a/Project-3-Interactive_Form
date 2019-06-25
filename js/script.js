@@ -85,7 +85,7 @@ $('[type="checkbox"]').change((e) => {                                          
   let priceIndex = activityText.indexOf('$');                                         // Gets $ index value
   let price = activityText.slice(priceIndex + 1);                                    // Extracts string and just returns the number value
 
-  if (activity.checked) {                                                          // If activity checked
+  if (activity.checked) {                                                          // If activity checked...
     totalCost += parseInt(price);                                                 // Add the price to the total cost
   } else {
     totalCost -= parseInt(price);                                               // If unchecked subtract the cost
@@ -100,7 +100,7 @@ $('[type="checkbox"]').change((e) => {                                          
 
 //Creating all variables for Payment Info Section
 const $payOptions = $('#payment');
-const $creditPayment = $payOptions.next();                                                        // Selecting siblings 
+const $creditPayment = $payOptions.next();                                                        // Selecting siblings under payOptions
 const $paypalPayment = $payOptions.next().next();
 const $bitcoinPayment = $payOptions.next().next().next();
 const $creditCard = $('#credit-card');
@@ -134,6 +134,10 @@ $payOptions.change(function() {                                                 
       $bitcoinPayment.show();                                           // Show bitcoin details
     }
 });
+
+/***
+ VALIDATION
+ ***/
 
 // Creating and appending all error messages in red, hiding them all by default
 $('label[for="name"]').before('<label class="error" id="name-error"><font color="red">Name field must not be empty</font></label>');
@@ -295,26 +299,38 @@ $('#cvv').on('input', () => {                           // Listens for current i
 
 // Checks all form fields at once to see if everything is valid
 const isValid = () => {
-  if (validName($('#name').val()) && validEmail($('#mail').val()) && validActivities() && validCardNumber($('#cc-num').val()) &&
-    validZip($('#zip').val()) && validCVV($('#cvv').val())) {
-    return true;                                                    // Returns true if all forms are valid
-  } else {
-      validName($('#name').val());
-      validEmail($('#mail').val());
-      validActivities();
-      validCardNumber($('#cc-num').val());
-      validZip($('#zip').val());
-      validCVV($('#cvv').val());
-    return false;                                               // Returns false if any form is invalid
-  }
+   // If credit card is the payment selected...
+  if ($('#payment').val() === 'credit card') {                                  
+    if (validName($('#name').val()) && validEmail($('#mail').val()) && validActivities() && validCardNumber($('#cc-num').val()) &&
+       validZip($('#zip').val()) && validCVV($('#cvv').val())) {
+       return true;                                                            // Returns true if all forms are valid
+    } else {
+        validName($('#name').val());
+        validEmail($('#mail').val());
+        validActivities();
+        validCardNumber($('#cc-num').val());
+        validZip($('#zip').val());
+        validCVV($('#cvv').val());
+        return false;                                                   // Returns false if any form is invalid
+     }
+      // If credit card NOT selected...
+  } else {                                                                                           
+      if (validName($('#name').val()) && validEmail($('#mail').val()) && validActivities()) {
+          return true;                                                                             // Returns true if all other forms valid
+      } else {
+          validName($('#name').val());
+          validEmail($('#mail').val());
+          validActivities();
+          return false;                                                                       // Returns false if any other form is invalid
+        }
+    }
 }
-
 // Prevents default action of form submitting if any errors present
 $('form').on('submit', (e) => {
   if (isValid() === true) {
-    window.location.reload();
+    window.location.reload();                                                         // Submit button only works if all forms are valid
     
   } else {
-    e.preventDefault();
+    e.preventDefault();                                                            // Submit button will not work otherwise
     }
 });
