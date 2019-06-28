@@ -8,7 +8,10 @@ $('#name').focus();                                                             
 
 // Created a text input element in HTML with id of "other-title" 
 // Only show it when "Other" option is selected from the "Job Role" menu
-$('#other-title').hide();                                                          // Hides the 'Your Job Role' input text field                   
+$('#other-title').hide();                                                          // Hides the 'Your Job Role' input text field    
+
+
+
  $('#title').on('change', function () {                                           // Event listener for when Job Role option changes
         if ($(this).val() === 'other') {                                         // If 'Other' is selected...
             $('#other-title').show();                                           // Show the 'Your Job Role' input text field
