@@ -315,7 +315,7 @@ const isValid = () => {
         return false;                                                   // Returns false if any form is invalid
      }
       // If credit card NOT selected...
-  } else {                                                                                           
+  } else if ($('#payment').val() === 'paypal' || $('#payment').val() === 'bitcoin') {                                                                                           
       if (validName($('#name').val()) && validEmail($('#mail').val()) && validActivities()) {
           return true;                                                                             // Returns true if all other forms valid
       } else {
@@ -324,6 +324,8 @@ const isValid = () => {
           validActivities();
           return false;                                                                       // Returns false if any other form is invalid
         }
+    } else {
+     alert('Please select a payment option');
     }
 }
 // Prevents default action of form submitting if any errors present
@@ -334,6 +336,6 @@ $('form').on('submit', (e) => {
     
   } else {
     e.preventDefault(); // Submit button will not work otherwise
-   alert('Please check all fields are entered correctly.');
+   alert('Please check all fields are entered correctly');
     }
 });
