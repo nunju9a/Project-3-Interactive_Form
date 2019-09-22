@@ -333,6 +333,7 @@ $('form').on('submit', (e) => {
     window.location.reload();                                                         // Submit button only works if all forms are valid
     
   } else {
-    e.preventDefault();                                                            // Submit button will not work otherwise
+    e.preventDefault(); // Submit button will not work otherwise
+   alert('Please check all fields are entered correctly.');
     }
 });
