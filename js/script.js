@@ -329,6 +329,7 @@ const isValid = () => {
 // Prevents default action of form submitting if any errors present
 $('form').on('submit', (e) => {
   if (isValid() === true) {
+   alert('Thank you for registering!');
     window.location.reload();                                                         // Submit button only works if all forms are valid
     
   } else {
